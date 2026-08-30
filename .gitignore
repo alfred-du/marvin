@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Model weights and the llama.cpp checkout: fetched, never committed.
+pi/models/
+.llama.cpp/
+.llama-server.log
+
+# Eval output.
+runs/
