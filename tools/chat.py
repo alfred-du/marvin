@@ -27,9 +27,9 @@ EXIT_WORDS = frozenset({"quit", "exit", ":q"})
 RESET_WORDS = frozenset({"reset", ":r"})
 
 
-def say(config: BrainConfig, system_prompt: str, conversation: persona.Conversation, text: str) -> str:
+def say(config: BrainConfig, marvin: persona.Persona, conversation: persona.Conversation, text: str) -> str:
     """Stream one reply, printing each sentence the moment it completes."""
-    messages = persona.build_messages(system_prompt, conversation, text)
+    messages = persona.build_messages(marvin, conversation, text)
     started = time.perf_counter()
     first_sentence_s = 0.0
     spoken: list[str] = []
@@ -57,7 +57,7 @@ def main(argv: list[str] | None = None) -> int:
     config = BrainConfig(base_url=args.url, temperature=args.temperature)
     try:
         wait_for_server(config, timeout_s=60.0)
-        system_prompt = persona.load_system_prompt(config.system_prompt_path)
+        marvin = persona.load_persona(config.system_prompt_path, config.examples_path)
     except (BrainError, persona.PersonaError) as error:
         print(f"error: {error}", file=sys.stderr)
         return 1
@@ -65,7 +65,7 @@ def main(argv: list[str] | None = None) -> int:
     conversation = persona.Conversation(max_turns=config.max_turns)
 
     if args.once:
-        reply = say(config, system_prompt, conversation, args.once)
+        reply = say(config, marvin, conversation, args.once)
         return 0 if reply else 1
 
     print("Marvin is listening. 'reset' clears the window, 'quit' leaves.\n")
@@ -84,7 +84,7 @@ def main(argv: list[str] | None = None) -> int:
             print("        [context cleared]\n")
             continue
         try:
-            reply = say(config, system_prompt, conversation, text)
+            reply = say(config, marvin, conversation, text)
         except BrainError as error:
             print(f"\nerror: {error}", file=sys.stderr)
             continue

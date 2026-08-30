@@ -12,11 +12,12 @@ TTS (Piper), the SoX voice chain and the V821 front-end are not built yet.
 ```
 pi/marvind/
   config.py      immutable, validated settings; MARVIN_* env overrides
-  persona.py     prompt assembly, rolling window, <sigh> interception
+  persona.py     Persona (prompt + few-shots), rolling window, <sigh> interception
   sentences.py   streaming sentence splitter (pure, no I/O)
   brain.py       llama-server client over stdlib HTTP + SSE
 pi/prompts/
-  marvin.system.md   the nine cadence rules, formatting, worked examples
+  marvin.system.md      the nine cadence rules and formatting constraints
+  marvin.examples.json  few-shot turns, replayed as real user/assistant messages
 tools/
   chat.py            terminal REPL, streams sentence by sentence
   eval/rules.py      deterministic checks for 6 of the 9 rules

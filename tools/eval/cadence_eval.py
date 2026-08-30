@@ -60,12 +60,12 @@ def load_prompts(path: Path, limit: int | None) -> tuple[dict, ...]:
 
 def run_prompts(config: BrainConfig, prompts: tuple[dict, ...]) -> tuple[PromptRun, ...]:
     """Ask each prompt in a fresh context. Cadence is per-reply, not cumulative."""
-    system_prompt = persona.load_system_prompt(config.system_prompt_path)
+    marvin = persona.load_persona(config.system_prompt_path, config.examples_path)
     conversation = persona.Conversation(max_turns=config.max_turns)
     runs: list[PromptRun] = []
 
     for entry in prompts:
-        messages = persona.build_messages(system_prompt, conversation, entry["text"])
+        messages = persona.build_messages(marvin, conversation, entry["text"])
         try:
             reply = generate(config, messages)
         except BrainError as error:

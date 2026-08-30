@@ -31,6 +31,18 @@ def test_build_payload_carries_the_sampling_settings_and_the_messages():
     assert payload["seed"] == 11
 
 
+def test_build_payload_bans_the_exclamation_token_at_decode():
+    # Rule 4 is absolute, so it is enforced rather than requested.
+    payload = build_payload(BrainConfig(), [{"role": "user", "content": "hi"}], stream=False)
+    assert payload["logit_bias"] == [["!", False]]
+
+
+def test_build_payload_omits_logit_bias_when_nothing_is_suppressed():
+    config = BrainConfig(suppressed_tokens=())
+    payload = build_payload(config, [{"role": "user", "content": "hi"}], stream=False)
+    assert "logit_bias" not in payload
+
+
 def test_build_payload_rejects_an_empty_message_list():
     with pytest.raises(BrainError):
         build_payload(BrainConfig(), [], stream=True)

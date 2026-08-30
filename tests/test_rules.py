@@ -180,3 +180,17 @@ def test_rules_not_applicable_are_excluded_rather_than_counted_against():
 def test_every_rule_id_has_a_description():
     covered = set(rules.HARD_RULES) | set(rules.SOFT_AUTO_RULES) | set(rules.HUMAN_RULES)
     assert covered == set(rules.RULE_NAMES)
+
+
+def test_every_shipped_few_shot_example_passes_the_automatic_rules():
+    """An example that breaks a rule teaches the model to break it."""
+    from marvind import persona
+    from marvind.config import DEFAULT_EXAMPLES, DEFAULT_SYSTEM_PROMPT
+
+    marvin = persona.load_persona(DEFAULT_SYSTEM_PROMPT, DEFAULT_EXAMPLES)
+    for example in marvin.examples:
+        score = rules.score_reply(example.assistant)
+        assert score.passed, (
+            example.user,
+            [(r.rule_id, r.detail) for r in score.results if not r.passed],
+        )

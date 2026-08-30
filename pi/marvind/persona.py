@@ -7,6 +7,7 @@ model server.
 
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass, replace
 from pathlib import Path
@@ -69,6 +70,30 @@ class Conversation:
 
 
 @dataclass(frozen=True)
+class Example:
+    """One demonstration turn, replayed to the model as if it had happened."""
+
+    user: str
+    assistant: str
+
+    def __post_init__(self) -> None:
+        if not self.user.strip() or not self.assistant.strip():
+            raise PersonaError("example turns must not be empty")
+
+
+@dataclass(frozen=True)
+class Persona:
+    """Everything that defines who Marvin is, loaded once at start."""
+
+    system_prompt: str
+    examples: tuple[Example, ...] = ()
+
+    def __post_init__(self) -> None:
+        if not self.system_prompt.strip():
+            raise PersonaError("system prompt must not be empty")
+
+
+@dataclass(frozen=True)
 class Segment:
     """A stretch of output bound for one renderer: synthesised speech, or a splice."""
 
@@ -87,20 +112,55 @@ def load_system_prompt(path: Path) -> str:
     return prompt
 
 
+def load_examples(path: Path) -> tuple[Example, ...]:
+    """Read the few-shot turns. Absent is an error: they carry most of the persona."""
+    try:
+        data = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise PersonaError(f"cannot read examples at {path}: {error}") from error
+
+    entries = data.get("examples", ())
+    if not entries:
+        raise PersonaError(f"examples file at {path} defines none")
+    try:
+        return tuple(Example(entry["user"], entry["assistant"]) for entry in entries)
+    except (KeyError, TypeError) as error:
+        raise PersonaError(f"malformed example in {path}: {error}") from error
+
+
+def load_persona(prompt_path: Path, examples_path: Path) -> Persona:
+    """Load the system prompt and the few-shot turns together."""
+    return Persona(load_system_prompt(prompt_path), load_examples(examples_path))
+
+
 def build_messages(
-    system_prompt: str,
+    persona: Persona,
     conversation: Conversation,
     user_text: str,
 ) -> tuple[dict[str, str], ...]:
-    """Assemble the chat payload: system prompt, rolling window, then this turn."""
-    if not system_prompt.strip():
-        raise PersonaError("system prompt must not be empty")
+    """Assemble the chat payload.
+
+    Order matters: system prompt, then the few-shot turns, then the rolling
+    window, then this turn. The first two are fixed, so they form a stable KV
+    prefix that MVP.md section 5's presence pre-warm can fill before you speak.
+    Putting the examples after the history would invalidate that cache on every
+    turn and drag prefill back onto the critical path.
+    """
     if not user_text.strip():
         raise PersonaError("user text must not be empty")
 
+    demonstrations = tuple(
+        message
+        for example in persona.examples
+        for message in (
+            {"role": USER, "content": example.user},
+            {"role": ASSISTANT, "content": example.assistant},
+        )
+    )
     history = tuple({"role": turn.role, "content": turn.content} for turn in conversation.turns)
     return (
-        {"role": SYSTEM, "content": system_prompt},
+        {"role": SYSTEM, "content": persona.system_prompt},
+        *demonstrations,
         *history,
         {"role": USER, "content": user_text.strip()},
     )

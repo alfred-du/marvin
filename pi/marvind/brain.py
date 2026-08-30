@@ -48,7 +48,7 @@ def build_payload(
     """The request body. Extra llama.cpp sampling keys are ignored by other servers."""
     if not messages:
         raise BrainError("messages must not be empty")
-    return {
+    payload: dict[str, object] = {
         "messages": list(messages),
         "stream": stream,
         "temperature": config.temperature,
@@ -58,6 +58,10 @@ def build_payload(
         "stop": list(config.stop),
         "seed": config.seed,
     }
+    if config.suppressed_tokens:
+        # false, rather than a large negative bias, is llama.cpp's "never produce".
+        payload["logit_bias"] = [[token, False] for token in config.suppressed_tokens]
+    return payload
 
 
 def iter_deltas(lines: Iterable[bytes | str]) -> Iterator[str]:

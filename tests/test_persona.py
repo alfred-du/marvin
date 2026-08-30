@@ -5,7 +5,10 @@ from __future__ import annotations
 import pytest
 
 from marvind import persona
-from marvind.persona import Conversation, PersonaError, Segment, Turn
+from marvind.config import DEFAULT_EXAMPLES, DEFAULT_SYSTEM_PROMPT
+from marvind.persona import Conversation, Example, Persona, PersonaError, Segment, Turn
+
+BARE = Persona("SYSTEM")
 
 
 def test_conversation_drops_the_oldest_turn_once_the_window_is_full():
@@ -48,28 +51,78 @@ def test_conversation_rejects_a_zero_length_window():
 
 def test_build_messages_puts_system_first_history_next_and_the_new_turn_last():
     conversation = Conversation().with_exchange("hello", "oh")
-    messages = persona.build_messages("SYSTEM", conversation, "  what is the weather  ")
+    messages = persona.build_messages(BARE, conversation, "  what is the weather  ")
 
     assert [message["role"] for message in messages] == ["system", "user", "assistant", "user"]
     assert messages[0]["content"] == "SYSTEM"
     assert messages[-1]["content"] == "what is the weather"
 
 
+def test_examples_are_replayed_as_real_turns_between_system_and_history():
+    # The fixed prefix must come first, or the KV cache is invalidated every turn.
+    marvin = Persona("SYSTEM", (Example("two plus two?", "Four. Ask me something hard."),))
+    conversation = Conversation().with_exchange("hello", "oh")
+
+    messages = persona.build_messages(marvin, conversation, "what time is it")
+
+    assert [message["role"] for message in messages] == [
+        "system", "user", "assistant", "user", "assistant", "user",
+    ]
+    assert messages[1]["content"] == "two plus two?"
+    assert messages[2]["content"] == "Four. Ask me something hard."
+    assert messages[3]["content"] == "hello"
+
+
 def test_build_messages_rejects_an_empty_user_turn():
     with pytest.raises(PersonaError):
-        persona.build_messages("SYSTEM", Conversation(), "")
+        persona.build_messages(BARE, Conversation(), "")
 
 
-def test_build_messages_rejects_an_empty_system_prompt():
+def test_persona_rejects_an_empty_system_prompt():
     with pytest.raises(PersonaError):
-        persona.build_messages("  ", Conversation(), "hello")
+        Persona("  ")
+
+
+def test_example_rejects_an_empty_side():
+    with pytest.raises(PersonaError):
+        Example("hello", "  ")
 
 
 def test_load_system_prompt_reads_the_shipped_prompt():
-    from marvind.config import DEFAULT_SYSTEM_PROMPT
-
     prompt = persona.load_system_prompt(DEFAULT_SYSTEM_PROMPT)
     assert "Paranoid Android" in prompt
+
+
+def test_load_persona_reads_the_shipped_prompt_and_examples():
+    marvin = persona.load_persona(DEFAULT_SYSTEM_PROMPT, DEFAULT_EXAMPLES)
+    assert "Paranoid Android" in marvin.system_prompt
+    assert len(marvin.examples) >= 8
+
+
+def test_the_shipped_examples_cover_the_categories_that_failed():
+    marvin = persona.load_persona(DEFAULT_SYSTEM_PROMPT, DEFAULT_EXAMPLES)
+    prompts = " ".join(example.user.lower() for example in marvin.examples)
+    for category in ("capital", "lights", "thanks", "morning", "help", "good day"):
+        assert category in prompts, f"no few-shot covers {category!r}"
+
+
+def test_load_examples_raises_on_a_missing_file(tmp_path):
+    with pytest.raises(PersonaError):
+        persona.load_examples(tmp_path / "absent.json")
+
+
+def test_load_examples_raises_when_the_file_defines_none(tmp_path):
+    empty = tmp_path / "examples.json"
+    empty.write_text('{"examples": []}')
+    with pytest.raises(PersonaError):
+        persona.load_examples(empty)
+
+
+def test_load_examples_raises_on_a_malformed_entry(tmp_path):
+    broken = tmp_path / "examples.json"
+    broken.write_text('{"examples": [{"user": "hello"}]}')
+    with pytest.raises(PersonaError):
+        persona.load_examples(broken)
 
 
 def test_load_system_prompt_raises_on_a_missing_file(tmp_path):

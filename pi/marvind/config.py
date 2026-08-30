@@ -8,6 +8,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SYSTEM_PROMPT = REPO_ROOT / "pi" / "prompts" / "marvin.system.md"
+DEFAULT_EXAMPLES = REPO_ROOT / "pi" / "prompts" / "marvin.examples.json"
 DEFAULT_BASE_URL = "http://127.0.0.1:8080"
 
 # Two to four sentences (rule 8) is well under this; the cap only stops runaways.
@@ -20,6 +21,13 @@ DEFAULT_TIMEOUT_S = 180.0
 DEFAULT_SEED = -1
 DEFAULT_MAX_TURNS = 8
 
+# Rule 4 is absolute, so it is enforced at decode rather than requested in the
+# prompt. An exclamation mark is also an audio defect: Piper reads it as a
+# lift in pitch, which is the one thing Marvin never does. Note this bans the
+# tokens spelling '!', so a merged multi-character token containing one could
+# still slip through; rule 4's failure count in the eval is the check.
+DEFAULT_SUPPRESSED_TOKENS = ("!",)
+
 
 class ConfigError(ValueError):
     """Raised when configuration is out of range or unusable."""
@@ -31,6 +39,7 @@ class BrainConfig:
 
     base_url: str = DEFAULT_BASE_URL
     system_prompt_path: Path = DEFAULT_SYSTEM_PROMPT
+    examples_path: Path = DEFAULT_EXAMPLES
     temperature: float = DEFAULT_TEMPERATURE
     top_p: float = DEFAULT_TOP_P
     repeat_penalty: float = DEFAULT_REPEAT_PENALTY
@@ -39,6 +48,7 @@ class BrainConfig:
     request_timeout_s: float = DEFAULT_TIMEOUT_S
     seed: int = DEFAULT_SEED
     stop: tuple[str, ...] = field(default_factory=lambda: ("\nUser:", "\nMarvin:"))
+    suppressed_tokens: tuple[str, ...] = DEFAULT_SUPPRESSED_TOKENS
 
     def __post_init__(self) -> None:
         if not self.base_url.startswith(("http://", "https://")):
@@ -69,6 +79,7 @@ class BrainConfig:
         return cls(
             base_url=source.get("MARVIN_LLM_URL", DEFAULT_BASE_URL),
             system_prompt_path=Path(source.get("MARVIN_SYSTEM_PROMPT", str(DEFAULT_SYSTEM_PROMPT))),
+            examples_path=Path(source.get("MARVIN_EXAMPLES", str(DEFAULT_EXAMPLES))),
             temperature=_as_float(source, "MARVIN_TEMPERATURE", DEFAULT_TEMPERATURE),
             top_p=_as_float(source, "MARVIN_TOP_P", DEFAULT_TOP_P),
             repeat_penalty=_as_float(source, "MARVIN_REPEAT_PENALTY", DEFAULT_REPEAT_PENALTY),
