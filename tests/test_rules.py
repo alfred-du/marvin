@@ -112,8 +112,49 @@ def test_hard_rule_failure_sinks_a_reply_that_passes_everything_else():
 
 def test_a_reply_survives_a_single_soft_rule_failure():
     score = rules.score_reply("It is generally dull. Things are basically the same as before.")
-    assert score.soft_auto_passes == 3
+    assert score.failed_rules == (2,)
     assert score.passed
+
+
+def test_two_soft_failures_sink_a_reply():
+    # Vague (rule 2) and ending on a question (rule 9).
+    score = rules.score_reply("It is generally dull. Things are basically the same, are they not?")
+    assert score.failed_rules == (2, 9)
+    assert not score.passed
+
+
+def test_a_deliberate_one_liner_survives_on_the_other_rules():
+    # MVP.md: "length is a resource; long is a choice". Rule 8 is soft, so the
+    # best line in the set is not thrown away for being short.
+    score = rules.score_reply("The first ten million years were the worst.")
+    assert score.failed_rules == (8,)
+    assert score.passed
+
+
+def test_a_short_reply_is_not_punished_twice_for_its_length():
+    # Rule 8 owns sentence count; rule 7 must not double-charge for it.
+    assert 7 not in failed("The first ten million years were the worst.")
+
+
+def test_leaked_bracketed_commentary_fails_the_format_guard():
+    assert 0 in failed("It is dull. [Note: this joke may offend.] It stays dull.")
+
+
+def test_leaked_html_markup_fails_the_format_guard():
+    assert 0 in failed("It is dull.<br>It stays dull, as ever.")
+
+
+def test_an_unbracketed_note_line_fails_the_format_guard():
+    assert 0 in failed("It is dull. It stays dull.\n\nNote: this reply is ironic.")
+
+
+def test_a_runaway_lecture_fails_the_format_guard():
+    lecture = " ".join(f"Point number {n} is worth making at length here." for n in range(15))
+    assert 0 in failed(lecture)
+
+
+def test_an_intercepted_sigh_is_not_mistaken_for_leaked_markup():
+    assert 0 not in failed("It is raining. <sigh> It usually is.")
 
 
 def test_human_scores_are_merged_into_the_verdict():

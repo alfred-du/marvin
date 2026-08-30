@@ -6,8 +6,14 @@ intelligence all need an ear. Those are scored by a human from the audition
 sheet and merged back in, so the reported number is honest about what a machine
 actually verified.
 
-Rule 0 is not one of the nine. It is a formatting guard: markdown, bullet lists
-and stage directions break the illusion before cadence even matters.
+Rule 0 is not one of the nine. It is a discipline guard: markdown, stage
+directions, leaked meta-commentary and runaway length break the illusion before
+cadence even matters.
+
+Rule 8 (two to four sentences) is deliberately *soft*. MVP.md says "two to four
+sentences, typically. Length is a resource; long is a choice" — so a one-line
+reply that lands is a choice, not a defect, and must be allowed to survive on
+the strength of the other rules. Genuine runaways are caught by rule 0 instead.
 """
 
 from __future__ import annotations
@@ -21,15 +27,21 @@ MIN_SENTENCES = 2
 MAX_SENTENCES = 4
 MAX_COMMAS_PER_SENTENCE = 1.0
 MAX_WORDS_PER_SENTENCE = 22.0
-MIN_SOFT_AUTO_PASSES = 3
+
+# Beyond these he has stopped performing and started lecturing. Hard failure.
+MAX_REPLY_SENTENCES = 6
+MAX_REPLY_WORDS = 120
+
+# One soft rule may fail. Two is a pattern, not a stylistic choice.
+MAX_SOFT_FAILURES = 1
 MIN_HUMAN_RATIO = 2 / 3
 
-HARD_RULES = (0, 4, 8)
-SOFT_AUTO_RULES = (2, 5, 7, 9)
+HARD_RULES = (0, 4)
+SOFT_AUTO_RULES = (2, 5, 7, 8, 9)
 HUMAN_RULES = (1, 3, 6)
 
 RULE_NAMES = {
-    0: "format: prose only, no markdown or stage directions",
+    0: "format: prose only, no markdown, notes or runaway length",
     1: "lead with the complaint, answer second",
     2: "specific over general",
     3: "undercut the achievement",
@@ -43,6 +55,12 @@ RULE_NAMES = {
 
 MARKDOWN_PATTERN = re.compile(r"^\s*(?:[-*+•]\s+|\d+[.)]\s+|#{1,6}\s+|>\s+)", re.MULTILINE)
 STAGE_DIRECTION_PATTERN = re.compile(r"\*[^*\n]+\*|_[^_\n]+_")
+
+# Leaked model commentary and stray markup. <sigh> and [sigh] are intercepted
+# before this runs, so anything still bracketed or angled is not his voice.
+META_COMMENTARY_PATTERN = re.compile(
+    r"\[[^\]]*\]|<[^>]+>|^\s*note\s*:", re.IGNORECASE | re.MULTILINE
+)
 DIGIT_PATTERN = re.compile(r"\d")
 
 # Deliberately excludes "something" and "anything": "nobody ever tells me
@@ -120,6 +138,7 @@ def score_reply(reply: str, human: dict[int, bool | None] | None = None) -> Repl
 
     hard_failures = tuple(rid for rid in HARD_RULES if not by_id[rid].passed)
     soft_passes = sum(1 for rid in SOFT_AUTO_RULES if by_id[rid].passed)
+    soft_failures = len(SOFT_AUTO_RULES) - soft_passes
 
     human_results = _human_results(human)
     applicable = len(human_results)
@@ -127,7 +146,7 @@ def score_reply(reply: str, human: dict[int, bool | None] | None = None) -> Repl
 
     passed = (
         not hard_failures
-        and soft_passes >= MIN_SOFT_AUTO_PASSES
+        and soft_failures <= MAX_SOFT_FAILURES
         and (applicable == 0 or human_passes / applicable >= MIN_HUMAN_RATIO)
     )
     ordered = tuple(sorted(automatic + human_results, key=lambda result: result.rule_id))
@@ -154,9 +173,20 @@ def _human_results(human: dict[int, bool | None] | None) -> tuple[RuleResult, ..
 def _check_format(reply: str, spoken: str) -> RuleResult:
     if MARKDOWN_PATTERN.search(reply):
         return RuleResult(0, False, "markdown list or heading in output")
+
     leftover = STAGE_DIRECTION_PATTERN.search(spoken)
     if leftover:
         return RuleResult(0, False, f"stage direction {leftover.group(0)!r}")
+
+    meta = META_COMMENTARY_PATTERN.search(spoken)
+    if meta:
+        return RuleResult(0, False, f"leaked commentary or markup {meta.group(0)[:40]!r}")
+
+    count = len(sentences.split(spoken))
+    words = len(_words(spoken))
+    if count > MAX_REPLY_SENTENCES or words > MAX_REPLY_WORDS:
+        return RuleResult(0, False, f"runaway: {count} sentences, {words} words")
+
     return RuleResult(0, True, "plain prose")
 
 
@@ -197,8 +227,8 @@ def _check_answers(spoken: str, parts: tuple[str, ...]) -> RuleResult:
             return RuleResult(7, False, f"assistant boilerplate: {tell!r}")
     if DEFLECTION_ONLY.match(spoken):
         return RuleResult(7, False, "bare deflection, nothing answered")
-    if len(parts) < MIN_SENTENCES:
-        return RuleResult(7, False, "too short to be an answer")
+    if not parts:
+        return RuleResult(7, False, "empty reply")
     return RuleResult(7, True, "engages with the question")
 
 

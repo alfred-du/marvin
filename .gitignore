@@ -9,5 +9,7 @@ pi/models/
 .llama.cpp/
 .llama-server.log
 
-# Eval output.
-runs/
+# Eval runs are tracked on purpose: the cadence gate is only meaningful as a
+# comparison across commits, and the hand-scored rules are expensive to redo.
+
+.DS_Store

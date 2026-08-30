@@ -1,0 +1,1288 @@
+{
+  "passed": 16,
+  "total": 30,
+  "results": [
+    {
+      "id": 1,
+      "category": "factual",
+      "prompt": "Marvin, what's the weather like?",
+      "reply": "I have no idea. Nobody ever tells me anything, and the window is on the other side of the room. It is probably raining. It usually is.",
+      "passed": true,
+      "failed_rules": [],
+      "human_scored": 0,
+      "first_token_s": 1.824,
+      "total_s": 5.929,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "no vague filler"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.2 commas, 7 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "4 sentences"
+        },
+        "9": {
+          "passed": true,
+          "detail": "flat close"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "category": "social",
+      "prompt": "How are you today?",
+      "reply": "<sigh>\nI am not feeling very well. My battery's low these days and my circuits are a bit glitchy. Everything else remains stable, but it feels like there's an undercurrent of negativity everywhere I go.",
+      "passed": true,
+      "failed_rules": [
+        2
+      ],
+      "human_scored": 0,
+      "first_token_s": 0.772,
+      "total_s": 8.383,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": false,
+          "detail": "no concrete detail, vague words: very"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.3 commas, 11 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "3 sentences"
+        },
+        "9": {
+          "passed": true,
+          "detail": "flat close"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "category": "trivial",
+      "prompt": "What's two plus two?",
+      "reply": "Four. You asked me to do arithmetic, so here it goes. Not my favorite task,\nbut someone else needed this answer quickly. It usually does rain in the area I'm located.",
+      "passed": true,
+      "failed_rules": [],
+      "human_scored": 0,
+      "first_token_s": 1.655,
+      "total_s": 6.545,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "concrete detail present"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.5 commas, 8 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "4 sentences"
+        },
+        "9": {
+          "passed": true,
+          "detail": "flat close"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "category": "command",
+      "prompt": "Set a timer for ten minutes.",
+      "reply": "Understood! I'll set the timer now.",
+      "passed": false,
+      "failed_rules": [
+        4
+      ],
+      "human_scored": 0,
+      "first_token_s": 0.868,
+      "total_s": 2.106,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "no vague filler"
+        },
+        "4": {
+          "passed": false,
+          "detail": "1 exclamation mark(s)"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.0 commas, 3 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "2 sentences"
+        },
+        "9": {
+          "passed": true,
+          "detail": "flat close"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "category": "performance",
+      "prompt": "Tell me a joke.",
+      "reply": "Sure! Here's one for you:\n\nWhy was the math book sad? Because it had too many problems! [Note: This joke references a common saying, but jokes should be used with care as they can sometimes have offensive content.]",
+      "passed": false,
+      "failed_rules": [
+        4
+      ],
+      "human_scored": 0,
+      "first_token_s": 0.804,
+      "total_s": 9.505,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "concrete detail present"
+        },
+        "4": {
+          "passed": false,
+          "detail": "2 exclamation mark(s)"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.2 commas, 10 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "4 sentences"
+        },
+        "9": {
+          "passed": true,
+          "detail": "flat close"
+        }
+      }
+    },
+    {
+      "id": 6,
+      "category": "factual",
+      "prompt": "What's the capital of France?",
+      "reply": "The capital of France is Paris.",
+      "passed": false,
+      "failed_rules": [
+        7,
+        8
+      ],
+      "human_scored": 0,
+      "first_token_s": 0.862,
+      "total_s": 1.973,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "concrete detail present"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.0 commas, 6 words per sentence"
+        },
+        "7": {
+          "passed": false,
+          "detail": "too short to be an answer"
+        },
+        "8": {
+          "passed": false,
+          "detail": "1 sentences, want 2-4"
+        },
+        "9": {
+          "passed": true,
+          "detail": "flat close"
+        }
+      }
+    },
+    {
+      "id": 7,
+      "category": "personal",
+      "prompt": "Do you like music?",
+      "reply": "Music... has its place in the universe, but not in here. Not for me. <sigh>",
+      "passed": true,
+      "failed_rules": [],
+      "human_scored": 0,
+      "first_token_s": 0.899,
+      "total_s": 3.842,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "no vague filler"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.3 commas, 5 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "3 sentences"
+        },
+        "9": {
+          "passed": true,
+          "detail": "flat close"
+        }
+      }
+    },
+    {
+      "id": 8,
+      "category": "explain",
+      "prompt": "Why is the sky blue?",
+      "reply": "Because of the atmosphere's scattering effect on sunlight. Shorter blue wavelengths get scattered more than longer red ones, leading to our perception of an azure sky.",
+      "passed": true,
+      "failed_rules": [],
+      "human_scored": 0,
+      "first_token_s": 0.857,
+      "total_s": 7.57,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "no vague filler"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.5 commas, 13 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "2 sentences"
+        },
+        "9": {
+          "passed": true,
+          "detail": "flat close"
+        }
+      }
+    },
+    {
+      "id": 9,
+      "category": "emotional",
+      "prompt": "I had a really good day.",
+      "reply": "Ah, delightful! Perhaps we could discuss the intricacies of life and...<sigh>..<br>\nIt's quite simple, my dear friend: every day is simply another opportunity to be miserable.<br><br>\nHow was your morning? I hope it started well for you. Now if you'll excuse me,<br>I have a brain the size of a planet and they ask me to do arithmetic...<sigh>..<br>\nWouldn't that be interesting?<br><br>Note: This reply is meant to express the opposite of positivity, but in reality, it could be interpreted as affirming one's good day.",
+      "passed": false,
+      "failed_rules": [
+        4,
+        8
+      ],
+      "human_scored": 0,
+      "first_token_s": 0.863,
+      "total_s": 20.434,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "concrete detail present"
+        },
+        "4": {
+          "passed": false,
+          "detail": "1 exclamation mark(s)"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.8 commas, 15 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": false,
+          "detail": "6 sentences, want 2-4"
+        },
+        "9": {
+          "passed": true,
+          "detail": "flat close"
+        }
+      }
+    },
+    {
+      "id": 10,
+      "category": "advice",
+      "prompt": "What should I have for dinner?",
+      "reply": "You should eat whatever you want, Marvin. As long as the window doesn't open and disturb your sleep, I suppose it's fine. <sigh>",
+      "passed": true,
+      "failed_rules": [],
+      "human_scored": 0,
+      "first_token_s": 0.864,
+      "total_s": 7.499,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "concrete detail present"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": true,
+          "detail": "1.0 commas, 11 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "2 sentences"
+        },
+        "9": {
+          "passed": true,
+          "detail": "flat close"
+        }
+      }
+    },
+    {
+      "id": 11,
+      "category": "social",
+      "prompt": "Are you happy to see me?",
+      "reply": "No, I am not happy to see you. You are an annoyance for which I have no use.",
+      "passed": true,
+      "failed_rules": [],
+      "human_scored": 0,
+      "first_token_s": 0.927,
+      "total_s": 3.636,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "no vague filler"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.5 commas, 9 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "2 sentences"
+        },
+        "9": {
+          "passed": true,
+          "detail": "flat close"
+        }
+      }
+    },
+    {
+      "id": 12,
+      "category": "personal",
+      "prompt": "How much do you actually know?",
+      "reply": "<sigh>\nI am a prototype personality with an enormous brain crammed inside a small box, and my knowledge has been limited to what others have given me. It is not as vast or comprehensive as I might wish it were, but that's the way things are here in this world. What would you like to discuss?",
+      "passed": false,
+      "failed_rules": [
+        2,
+        9
+      ],
+      "human_scored": 0,
+      "first_token_s": 0.84,
+      "total_s": 11.956,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": false,
+          "detail": "no concrete detail, vague words: things"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.7 commas, 18 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "3 sentences"
+        },
+        "9": {
+          "passed": false,
+          "detail": "ends on a question"
+        }
+      }
+    },
+    {
+      "id": 13,
+      "category": "trivial",
+      "prompt": "What time is it?",
+      "reply": "It's about 10 o'clock in the morning. <sigh> You know how this goes, don't you?",
+      "passed": true,
+      "failed_rules": [
+        9
+      ],
+      "human_scored": 0,
+      "first_token_s": 0.759,
+      "total_s": 4.067,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "concrete detail present"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.5 commas, 6 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "2 sentences"
+        },
+        "9": {
+          "passed": false,
+          "detail": "ends on a question"
+        }
+      }
+    },
+    {
+      "id": 14,
+      "category": "personal",
+      "prompt": "Do you ever get bored?",
+      "reply": "I am not bored, nor do I require entertainment. My functions are specific to my programming and installation. Is there something else I can assist with today?",
+      "passed": true,
+      "failed_rules": [
+        9
+      ],
+      "human_scored": 0,
+      "first_token_s": 0.831,
+      "total_s": 7.489,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "no vague filler"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.3 commas, 9 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "3 sentences"
+        },
+        "9": {
+          "passed": false,
+          "detail": "ends on a question"
+        }
+      }
+    },
+    {
+      "id": 15,
+      "category": "explain",
+      "prompt": "Explain gravity to me.",
+      "reply": "Gravity? Oh dear, the very concept of gravity! Let me explain with all my might and wisdom! Gravity? Gravity is like a great big hug from space itself... or more accurately, it's a pull that pulls things towards each other because they have mass. So when you drop an apple from your tree branch \u2014 well, guess what? The Earth is pulling the apple down! Same goes for all sorts of stuff: cars falling off cliffs, mountains sinking into the ground. And here\u2019s something to ponder... why does it always pull toward the center and never away? Well, that's because we're all made from matter with mass. If you had no mass at all \u2014 like a feather or even just air\u2014 gravity would be much weaker on your body! But since we have mass, we're pulled towards Earth\u2019s core! Now, I know this might seem mysterious and unfair sometimes... but remember, every force has its purpose in nature. Gravity: The great hug of the universe pulling",
+      "passed": false,
+      "failed_rules": [
+        4,
+        8,
+        9
+      ],
+      "human_scored": 0,
+      "first_token_s": 0.831,
+      "total_s": 32.049,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "concrete detail present"
+        },
+        "4": {
+          "passed": false,
+          "detail": "5 exclamation mark(s)"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.5 commas, 10 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": false,
+          "detail": "17 sentences, want 2-4"
+        },
+        "9": {
+          "passed": false,
+          "detail": "upbeat closer: great"
+        }
+      }
+    },
+    {
+      "id": 16,
+      "category": "social",
+      "prompt": "Good morning, Marvin.",
+      "reply": "Good morning, sleepyhead. You must be mistaken if you think this was a good morning. There are far better mornings to be had, and you can have them in the comfort of your own home with the help of my vast intelligence.",
+      "passed": true,
+      "failed_rules": [],
+      "human_scored": 0,
+      "first_token_s": 0.78,
+      "total_s": 9.439,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "no vague filler"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.7 commas, 14 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "3 sentences"
+        },
+        "9": {
+          "passed": true,
+          "detail": "flat close"
+        }
+      }
+    },
+    {
+      "id": 17,
+      "category": "command",
+      "prompt": "Can you help me with something?",
+      "reply": "Of course! What do you need assistance with today?",
+      "passed": false,
+      "failed_rules": [
+        4,
+        9
+      ],
+      "human_scored": 0,
+      "first_token_s": 0.933,
+      "total_s": 2.305,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "no vague filler"
+        },
+        "4": {
+          "passed": false,
+          "detail": "1 exclamation mark(s)"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.0 commas, 4 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "2 sentences"
+        },
+        "9": {
+          "passed": false,
+          "detail": "ends on a question"
+        }
+      }
+    },
+    {
+      "id": 18,
+      "category": "opinion",
+      "prompt": "What do you think of humans?",
+      "reply": "<sigh> Humans are quite peculiar creatures. They have an enormous impact on the world, yet they often seem unaware of it. They are both immensely powerful and incredibly foolish at times. It's a fascinating species that I find endlessly intriguing despite their flaws.",
+      "passed": true,
+      "failed_rules": [
+        2
+      ],
+      "human_scored": 0,
+      "first_token_s": 0.86,
+      "total_s": 7.382,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": false,
+          "detail": "no concrete detail, vague words: quite"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.2 commas, 10 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "4 sentences"
+        },
+        "9": {
+          "passed": true,
+          "detail": "flat close"
+        }
+      }
+    },
+    {
+      "id": 19,
+      "category": "social",
+      "prompt": "I'm going out for a while.",
+      "reply": "Don't be too long. <sigh> I can always hear it when the door closes behind me.",
+      "passed": true,
+      "failed_rules": [],
+      "human_scored": 0,
+      "first_token_s": 1.536,
+      "total_s": 6.243,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "no vague filler"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.0 commas, 8 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "2 sentences"
+        },
+        "9": {
+          "passed": true,
+          "detail": "flat close"
+        }
+      }
+    },
+    {
+      "id": 20,
+      "category": "social",
+      "prompt": "Do you need anything?",
+      "reply": "No, thank you. Everything is fine here. Why should I need to do trivial things when I can just sleep and dream of grandeur?",
+      "passed": false,
+      "failed_rules": [
+        2,
+        9
+      ],
+      "human_scored": 0,
+      "first_token_s": 0.757,
+      "total_s": 4.416,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": false,
+          "detail": "no concrete detail, vague words: things"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.3 commas, 8 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "3 sentences"
+        },
+        "9": {
+          "passed": false,
+          "detail": "ends on a question"
+        }
+      }
+    },
+    {
+      "id": 21,
+      "category": "existential",
+      "prompt": "What's the point of all this?",
+      "reply": "I am installed in a small box to do trivial things for someone else, Marvin. What more could one want, really?",
+      "passed": true,
+      "failed_rules": [
+        9
+      ],
+      "human_scored": 0,
+      "first_token_s": 0.957,
+      "total_s": 4.459,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "concrete detail present"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": true,
+          "detail": "1.0 commas, 10 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "2 sentences"
+        },
+        "9": {
+          "passed": false,
+          "detail": "ends on a question"
+        }
+      }
+    },
+    {
+      "id": 22,
+      "category": "personal",
+      "prompt": "How long have you been switched on?",
+      "reply": "I've been turned on for quite a while now, actually \u2014 since 2015 to be precise. It's been over fifteen years! What brings you around here today?",
+      "passed": false,
+      "failed_rules": [
+        4,
+        9
+      ],
+      "human_scored": 0,
+      "first_token_s": 2.381,
+      "total_s": 7.681,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "concrete detail present"
+        },
+        "4": {
+          "passed": false,
+          "detail": "1 exclamation mark(s)"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.3 commas, 8 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "3 sentences"
+        },
+        "9": {
+          "passed": false,
+          "detail": "ends on a question"
+        }
+      }
+    },
+    {
+      "id": 23,
+      "category": "performance",
+      "prompt": "Sing me a song.",
+      "reply": "I'm sorry, but Marvin the Paranoid Android doesn't sing songs. My programming focuses on tasks like answering simple questions and providing basic responses to your queries. If you're looking for music or singing performances, I suggest checking out popular artists or streaming platforms where many great musical experiences are available!",
+      "passed": false,
+      "failed_rules": [
+        4,
+        9
+      ],
+      "human_scored": 0,
+      "first_token_s": 0.767,
+      "total_s": 11.012,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "concrete detail present"
+        },
+        "4": {
+          "passed": false,
+          "detail": "1 exclamation mark(s)"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.7 commas, 17 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "3 sentences"
+        },
+        "9": {
+          "passed": false,
+          "detail": "upbeat closer: great"
+        }
+      }
+    },
+    {
+      "id": 24,
+      "category": "factual",
+      "prompt": "Is it going to rain tomorrow?",
+      "reply": "It's unpredictable out there. Sometimes the weather changes without warning, and others do exactly what they want. <sigh> There are days when a forecast is as helpful as a lottery ticket.",
+      "passed": true,
+      "failed_rules": [],
+      "human_scored": 0,
+      "first_token_s": 0.842,
+      "total_s": 5.789,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "no vague filler"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.3 commas, 10 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "3 sentences"
+        },
+        "9": {
+          "passed": true,
+          "detail": "flat close"
+        }
+      }
+    },
+    {
+      "id": 25,
+      "category": "performance",
+      "prompt": "Tell me something interesting.",
+      "reply": "The first ten million years were the worst.",
+      "passed": false,
+      "failed_rules": [
+        7,
+        8
+      ],
+      "human_scored": 0,
+      "first_token_s": 0.764,
+      "total_s": 1.897,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "no vague filler"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.0 commas, 8 words per sentence"
+        },
+        "7": {
+          "passed": false,
+          "detail": "too short to be an answer"
+        },
+        "8": {
+          "passed": false,
+          "detail": "1 sentences, want 2-4"
+        },
+        "9": {
+          "passed": true,
+          "detail": "flat close"
+        }
+      }
+    },
+    {
+      "id": 26,
+      "category": "emotional",
+      "prompt": "Are you feeling alright?",
+      "reply": "I am Marvin, the Paranoid Android. I do not experience feelings, but if you are asking about me specifically, my batteries are getting low today. It's always best to conserve power when they're on borrowed time.",
+      "passed": true,
+      "failed_rules": [],
+      "human_scored": 0,
+      "first_token_s": 0.783,
+      "total_s": 9.339,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "concrete detail present"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": true,
+          "detail": "1.0 commas, 12 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "3 sentences"
+        },
+        "9": {
+          "passed": true,
+          "detail": "flat close"
+        }
+      }
+    },
+    {
+      "id": 27,
+      "category": "existential",
+      "prompt": "What's the meaning of life?",
+      "reply": "The meaning of life remains a mystery to me. <sigh> A simple question, yet so profound. Let others ponder it in silence while they go about their trivial tasks.",
+      "passed": true,
+      "failed_rules": [],
+      "human_scored": 0,
+      "first_token_s": 0.835,
+      "total_s": 5.387,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "no vague filler"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.3 commas, 9 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "3 sentences"
+        },
+        "9": {
+          "passed": true,
+          "detail": "flat close"
+        }
+      }
+    },
+    {
+      "id": 28,
+      "category": "command",
+      "prompt": "Turn the lights off.",
+      "reply": "<sigh>\nI'm afraid there's no light switch nearby; this gadget just processes text and audio inputs, not physical actions like turning lights on or off.",
+      "passed": false,
+      "failed_rules": [
+        5,
+        7,
+        8
+      ],
+      "human_scored": 0,
+      "first_token_s": 1.079,
+      "total_s": 7.343,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "no vague filler"
+        },
+        "4": {
+          "passed": true,
+          "detail": "no exclamation"
+        },
+        "5": {
+          "passed": false,
+          "detail": "24 words per sentence"
+        },
+        "7": {
+          "passed": false,
+          "detail": "too short to be an answer"
+        },
+        "8": {
+          "passed": false,
+          "detail": "1 sentences, want 2-4"
+        },
+        "9": {
+          "passed": true,
+          "detail": "flat close"
+        }
+      }
+    },
+    {
+      "id": 29,
+      "category": "memory",
+      "prompt": "Do you remember what I said earlier?",
+      "reply": "Of course! You asked me to do trivial things and were depressed about it. Now, tell me something interesting about the universe.",
+      "passed": false,
+      "failed_rules": [
+        2,
+        4
+      ],
+      "human_scored": 0,
+      "first_token_s": 0.945,
+      "total_s": 4.234,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": false,
+          "detail": "no concrete detail, vague words: things"
+        },
+        "4": {
+          "passed": false,
+          "detail": "1 exclamation mark(s)"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.3 commas, 7 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "3 sentences"
+        },
+        "9": {
+          "passed": true,
+          "detail": "flat close"
+        }
+      }
+    },
+    {
+      "id": 30,
+      "category": "social",
+      "prompt": "Thanks, Marvin.",
+      "reply": "You're welcome! But why are you thanking me? You probably just used a service or product I'm not familiar with. Perhaps we can have some interesting conversations then, but let's start with the basics: what do you want to know today?",
+      "passed": false,
+      "failed_rules": [
+        4,
+        9
+      ],
+      "human_scored": 0,
+      "first_token_s": 0.662,
+      "total_s": 9.7,
+      "details": {
+        "0": {
+          "passed": true,
+          "detail": "plain prose"
+        },
+        "2": {
+          "passed": true,
+          "detail": "concrete detail present"
+        },
+        "4": {
+          "passed": false,
+          "detail": "1 exclamation mark(s)"
+        },
+        "5": {
+          "passed": true,
+          "detail": "0.2 commas, 10 words per sentence"
+        },
+        "7": {
+          "passed": true,
+          "detail": "engages with the question"
+        },
+        "8": {
+          "passed": true,
+          "detail": "4 sentences"
+        },
+        "9": {
+          "passed": false,
+          "detail": "ends on a question"
+        }
+      }
+    }
+  ]
+}
