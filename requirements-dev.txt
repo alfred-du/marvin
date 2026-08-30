@@ -1,0 +1,5 @@
+# Runtime is stdlib only, on purpose: the Pi image stays small and offline.
+# These are for the test rig and the Colab model fetch.
+pytest>=7.0
+pytest-cov>=4.0
+huggingface_hub>=0.23
